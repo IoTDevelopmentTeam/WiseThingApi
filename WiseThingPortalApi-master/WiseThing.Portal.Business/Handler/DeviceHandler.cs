@@ -18,11 +18,17 @@ namespace WiseThing.Portal.Business
         {
              _devicerepo = deviceRepo;
         }
-       public async Task<string> AddNewDevice(DeviceDTO device)
+       public async Task<string> AddNewDevice(DeviceDTO[] devices)
        {
-            device.DeviceTagName = UniqueIdGenerator.GetUniqueId();
-            await _devicerepo.AddDevice(device);
-            return device.DeviceTagName;
+            string deviceTagName = string.Empty;
+            for (int i = 0; i < devices.Length; i++)
+            {
+                devices[i].DeviceTagName = UniqueIdGenerator.GetUniqueId();
+                deviceTagName = deviceTagName + devices[i].DeviceTagName + ",";
+            }
+            deviceTagName = deviceTagName.TrimEnd(',');
+            await _devicerepo.AddDevice(devices);
+            return deviceTagName;
        }
         public async Task<DeviceAssociationResult> EditDeviceWithUserAssociation(UserDeviceAssociation userDevice)
         {
@@ -53,6 +59,11 @@ namespace WiseThing.Portal.Business
        {
             return await _devicerepo.GetDevicesByuserId(userId);
        }
+
+        public async Task<IEnumerable<DeviceDTO>> GetAdminDevices()
+        {
+            return await _devicerepo.GetAdminDevices();
+        }
         private DeviceAssociationResult DeriveDeviceAssociationResult(int deviceId, int userId, UserDeviceAssociation userDevice,bool isSuccess)
         {
             if (isSuccess)

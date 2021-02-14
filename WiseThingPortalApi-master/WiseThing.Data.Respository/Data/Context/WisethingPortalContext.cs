@@ -20,6 +20,7 @@ namespace WiseThing.Data.Respository
         internal virtual DbSet<Usertype> Usertypes { get; set; }
         internal virtual DbSet<PaneDetail> PaneDetails { get; set; }
         internal virtual DbSet<ConfigDetail> ConfigDetail { get; set; }
+        internal virtual DbSet<SecurityQuestionMaster> SecurityQuestion { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -64,7 +65,7 @@ namespace WiseThing.Data.Respository
             {
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.UserName, "UserName_UNIQUE")
+                entity.HasIndex(e => e.Email, "Email_UNIQUE")
                     .IsUnique();
 
                 entity.HasIndex(e => e.UserType, "UserToUserType_idx");
@@ -81,11 +82,10 @@ namespace WiseThing.Data.Respository
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
 
-                entity.Property(e => e.UserName)
+                entity.Property(e => e.SecurityQuesId)
                     .IsRequired()
-                    .HasColumnType("varchar(50)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
+                    .HasColumnType("int");
+                    
                 entity.Property(e => e.InputDate).HasColumnType("datetime");
 
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime");
@@ -142,6 +142,13 @@ namespace WiseThing.Data.Respository
             modelBuilder.Entity<ConfigDetail>(entity =>
             {
                 entity.HasKey(e => new { e.Id })
+                     .HasName("PRIMARY");
+            });
+            OnModelCreatingPartial(modelBuilder);
+
+            modelBuilder.Entity<SecurityQuestionMaster>(entity =>
+            {
+                entity.HasKey(e => new { e.QuestionId })
                      .HasName("PRIMARY");
             });
             OnModelCreatingPartial(modelBuilder);

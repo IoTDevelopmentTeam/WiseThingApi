@@ -43,23 +43,35 @@ namespace WiseThingPortal.Api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("DeviceListAdmin")]
+        [EnableCors("MyPolicy")]
+        public async Task<ActionResult<IEnumerable<DeviceDTO>>> GetAdminListOfDevices()
+        {
+            try
+            {
+                var response = await _deviceHandler.GetAdminDevices();
+                if (response != null && response.Count() > 0)
+                    return Ok(response);
+                else
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
 
         [HttpPost]
         [Route("AddDevice")]
         [EnableCors("MyPolicy")]
-        public async Task<ActionResult<string>> AddNewDevice([FromBody] DeviceDTO device)
+        public async Task<ActionResult<string>> AddNewDevice(DeviceDTO[] devices)
         {
             try
             {
-                if (device != null)
-                {
-                    var deviceTag= await _deviceHandler.AddNewDevice(device);
-                    return Ok(deviceTag);
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                var deviceTag= await _deviceHandler.AddNewDevice(devices);
+                return Ok(deviceTag);
+                
             }
             catch(Exception ex)
             {

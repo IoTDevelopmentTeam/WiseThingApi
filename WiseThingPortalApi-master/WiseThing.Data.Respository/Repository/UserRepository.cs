@@ -29,12 +29,13 @@ namespace WiseThing.Data.Respository
         public async Task EditUser(UserDTO userDto)
         {
             var user = await _context.Users.SingleAsync(x => x.UserId == userDto.UserId);
-            user.UserName = userDto.UserName;
             user.Password = userDto.Password;
             user.Email = userDto.Email;
             user.PhoneNo = userDto.PhoneNo;
             user.UserType = user.UserType;
             user.UpdateDate = DateTime.Now;
+            user.SecurityQuesId = userDto.SecurityQuesId;
+            user.SecurityQuesAns = userDto.SecurityQuesAns;
             await _context.SaveChangesAsync();
 
         }
@@ -45,14 +46,14 @@ namespace WiseThing.Data.Respository
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<UserDTO> GetUserByLoginDetails(string userName, string passWord)
+        public async Task<UserDTO> GetUserByLoginDetails(string email, string passWord)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == userName && x.Password== passWord);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email && x.Password== passWord);
             return _mapper.Map<UserDTO>(user);
         }
-        public async Task<bool> IsUserExists(string userName)
+        public async Task<bool> IsUserExists(string email)
         {
-            return await _context.Users.AnyAsync(x => x.UserName == userName);
+            return await _context.Users.AnyAsync(x => x.Email == email);
         }
     }
 }

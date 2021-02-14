@@ -10,7 +10,7 @@ namespace WiseThing.Data.Respository
         Task AddNewUser(UserDTO userDto);
         Task EditUser(UserDTO userDto);
         Task<UserDTO> GetUserById(int userId);
-        Task<UserDTO >GetUserByLoginDetails(string userName, string passWord);
+        Task<UserDTO >GetUserByLoginDetails(string email, string passWord);
         Task<bool> IsUserExists(string userName);
 
     }

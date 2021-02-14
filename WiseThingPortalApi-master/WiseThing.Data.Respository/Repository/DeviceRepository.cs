@@ -14,11 +14,14 @@ namespace WiseThing.Data.Respository
         {
 
         }
-        public async Task<DeviceDTO> AddDevice(DeviceDTO deviceceDto)
+        public async Task<DeviceDTO[]> AddDevice(DeviceDTO[] deviceceDto)
         {
-            var device = _mapper.Map<Device>(deviceceDto);
-            device.InputDate = DateTime.Now;
-            _context.Devices.Add(device);
+            for (int i = 0; i < deviceceDto.Length; i++)
+            {
+                var device = _mapper.Map<Device>(deviceceDto[i]);
+                device.InputDate = DateTime.Now;
+                _context.Devices.Add(device);
+            }
             await _context.SaveChangesAsync();
             return deviceceDto;
         }
@@ -46,6 +49,17 @@ namespace WiseThing.Data.Respository
             return deviceList;
         }
 
+        public async Task<IEnumerable<DeviceDTO>> GetAdminDevices()
+        {
+            List<DeviceDTO> deviceList = new List<DeviceDTO>();
+            var devices = await _context.Devices.OrderByDescending(e => e.InputDate).ToListAsync();
+            devices.ForEach(x =>
+            {
+                var dto = _mapper.Map<DeviceDTO>(x);
+                deviceList.Add(dto);
+            });
+            return deviceList;
+        }
         public async Task<int> IsDeviceTagExist(string deviceTagName)
         {
             var result= await _context.Devices.SingleOrDefaultAsync(x => x.DeviceTagName == deviceTagName);

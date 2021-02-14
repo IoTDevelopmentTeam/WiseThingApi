@@ -17,22 +17,24 @@ namespace WiseThingPortal.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserHandler _userHandler;
+        
         public UserController(IUserHandler userHandler)
         {
             _userHandler = userHandler;
+            
         }
-        
-        
+       
+
         [HttpGet]
-        [Route("GetLoginUserDetails/{userName}/{passWord}")]
+        [Route("GetLoginUserDetails/{email}/{passWord}")]
         [EnableCors("MyPolicy")]
-        public async Task<ActionResult<UserDTO>> GetLoginUserDetails(string userName, string passWord)
+        public async Task<ActionResult<UserDTO>> GetLoginUserDetails(string email, string passWord)
         {
             try
             { 
-                if (!string.IsNullOrEmpty(userName) || !string.IsNullOrEmpty(userName))
+                if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(email))
                 {
-                    var response = await _userHandler.GetUserByLogin(userName, passWord);
+                    var response = await _userHandler.GetUserByLogin(email, passWord);
                     if (response != null)
                         return Ok(response);
                     else
@@ -135,6 +137,9 @@ namespace WiseThingPortal.Api.Controllers
 
         }
 
-        
+
+      
+
+
     }
 }

@@ -19,6 +19,10 @@ namespace WiseThing.Data.Respository
             CreateMap<PaneDetailsDTO, PaneDetail>();
             CreateMap<ConfigDetail, ConfigDetailsDTO>();
             CreateMap<ConfigDetailsDTO, ConfigDetail>();
+            CreateMap<SecurityQuestionMaster, SecurityQuestionMasterDTO>();
+            CreateMap<SecurityQuestionMasterDTO, SecurityQuestionMaster>();
+            CreateMap<UserSecurityQuestion, UserSecurityQuestionDTO>();
+            CreateMap<UserSecurityQuestionDTO, UserSecurityQuestion>();
         }
     }
 }

@@ -33,9 +33,9 @@ namespace WiseThing.Portal.Business
             return user;
         }
 
-        public async Task<UserDTO> GetUserByLogin(string userName, string passWord)
+        public async Task<UserDTO> GetUserByLogin(string email, string passWord)
         {
-            var user= await _userRepo.GetUserByLoginDetails(userName, passWord);
+            var user= await _userRepo.GetUserByLoginDetails(email, passWord);
             if (user != null)
                 user.Password = string.Empty;
             return user;

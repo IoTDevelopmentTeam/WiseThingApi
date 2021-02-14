@@ -9,7 +9,7 @@ namespace WiseThing.Portal.Business
     public interface IUserHandler
     {
         Task AddEditUser(UserDTO user);
-        Task<UserDTO> GetUserByLogin(string userName, string passWord);
+        Task<UserDTO> GetUserByLogin(string email, string passWord);
         Task<bool> IsUserNameAlreadyExsist(string userName);
         Task<UserDTO> GetUserById(int userId);
     }

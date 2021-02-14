@@ -40,10 +40,12 @@ namespace WiseThingPortalApi
             services.AddTransient<IUserHandler, UserHandler>();
             services.AddTransient<IDeviceHandler, DeviceHandler>();
             services.AddTransient<IPaneHandler, PaneHandler>();
+            services.AddTransient<ISecurityQuestionHandler, SecurityQuestionHandler>();
             services.AddTransient<IDeviceRepository, DeviceRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserDeviceRepository, UserDeviceRepository>();
             services.AddTransient<IPaneRepository, PaneRepository>();
+            services.AddTransient<ISecurityQuestionRepository, SecurityQuestionRepository>();
             services.AddControllers();
             services.AddCors(options =>
             {
