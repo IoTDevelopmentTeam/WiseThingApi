@@ -23,6 +23,9 @@ namespace WiseThing.Data.Respository
             CreateMap<SecurityQuestionMasterDTO, SecurityQuestionMaster>();
             CreateMap<UserSecurityQuestion, UserSecurityQuestionDTO>();
             CreateMap<UserSecurityQuestionDTO, UserSecurityQuestion>();
+            CreateMap<ResetPassword, ResetPasswordDTO>();
+            CreateMap<ResetPasswordDTO, ResetPassword>();
+           
         }
     }
 }

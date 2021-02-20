@@ -26,4 +26,12 @@ namespace WiseThing.Data.Respository
         public virtual Usertype UserTypeNavigation { get; set; }
         public virtual ICollection<Userdevice> Userdevices { get; set; }
     }
+
+
+    internal partial class ResetPassword
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+        
+    }
 }

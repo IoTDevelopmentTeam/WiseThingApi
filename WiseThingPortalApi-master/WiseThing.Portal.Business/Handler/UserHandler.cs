@@ -45,5 +45,11 @@ namespace WiseThing.Portal.Business
         {
             return await _userRepo.IsUserExists(userName);
         }
+        public async Task ResetPassword(ResetPasswordDTO resetPassword)
+        {
+           
+             await _userRepo.ResetPassword(resetPassword);
+           
+        }
     }
 }

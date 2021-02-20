@@ -12,9 +12,13 @@ namespace WiseThing.Data.Respository
         public string DeviceUniqueIdentifier { get; set; }
         public string DeviceTagName { get; set; }
         public string DeviceName { get; set; }
-        public DateTime InputDate { get; set; }
+        public bool? IsUsed { get; set; }
+        public DateTime? FirstUse { get; set; }
+        public DateTime? InputDate { get; set; }
         public string InputBy { get; set; }
     }
+
+    
 
     public class DashboardModel
     {

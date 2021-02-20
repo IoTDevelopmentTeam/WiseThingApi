@@ -27,8 +27,16 @@ namespace WiseThing.Data.Respository
                                  join u in _context.Users
                                  on sq.QuestionId equals u.SecurityQuesId
                                  where u.Email == email
-                                 select new { u.SecurityQuesId, sq.Question, u.SecurityQuesAns }).ToListAsync();
-            return _mapper.Map<UserSecurityQuestionDTO>(secQues);
+                                 select new { u.SecurityQuesId, sq.Question, u.SecurityQuesAns }).SingleOrDefaultAsync();
+            UserSecurityQuestion secQuestion = new UserSecurityQuestion();
+            if (secQues != null)
+            {
+                secQuestion.SecurityQuesId = secQues.SecurityQuesId;
+                secQuestion.Question = secQues.Question;
+                secQuestion.SecurityQuesAns = secQues.SecurityQuesAns;
+            }
+
+            return _mapper.Map<UserSecurityQuestionDTO>(secQuestion);
 
             
 

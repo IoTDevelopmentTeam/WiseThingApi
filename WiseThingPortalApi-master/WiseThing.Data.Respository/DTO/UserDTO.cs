@@ -17,4 +17,10 @@ namespace WiseThing.Data.Respository
         public DateTime InputDate { get; set; }
         public DateTime? UpdateDate { get; set; }
     }
+
+    public class ResetPasswordDTO
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
 }

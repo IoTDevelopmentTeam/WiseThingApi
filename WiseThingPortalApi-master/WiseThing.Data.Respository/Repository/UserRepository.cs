@@ -29,7 +29,7 @@ namespace WiseThing.Data.Respository
         public async Task EditUser(UserDTO userDto)
         {
             var user = await _context.Users.SingleAsync(x => x.UserId == userDto.UserId);
-            user.Password = userDto.Password;
+           
             user.Email = userDto.Email;
             user.PhoneNo = userDto.PhoneNo;
             user.UserType = user.UserType;
@@ -54,6 +54,14 @@ namespace WiseThing.Data.Respository
         public async Task<bool> IsUserExists(string email)
         {
             return await _context.Users.AnyAsync(x => x.Email == email);
+        }
+
+        public async Task ResetPassword(ResetPasswordDTO resetpasswordDto)
+        {
+            var user = await _context.Users.SingleAsync(x => x.Email == resetpasswordDto.Email);
+            user.Password = resetpasswordDto.Password;
+            await _context.SaveChangesAsync();
+
         }
     }
 }

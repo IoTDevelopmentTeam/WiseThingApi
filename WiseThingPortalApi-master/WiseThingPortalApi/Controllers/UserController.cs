@@ -136,9 +136,32 @@ namespace WiseThingPortal.Api.Controllers
             }
 
         }
+        [HttpPost]
+        [Route("ResetPassword")]
+        [EnableCors("MyPolicy")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPassword)
+        {
+            try
+            {
 
+                if (resetPassword != null)
+                {
+                    await _userHandler.ResetPassword(resetPassword);
+                    return Ok();
+                }
+                else
+                {
 
-      
+                    return BadRequest();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+
+        }
 
 
     }
