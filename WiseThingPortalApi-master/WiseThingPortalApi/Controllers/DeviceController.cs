@@ -80,6 +80,22 @@ namespace WiseThingPortal.Api.Controllers
         }
 
         [HttpPost]
+        [Route("UpdateDevice")]
+        [EnableCors("MyPolicy")]
+        public async Task<ActionResult> UpdateDevice(DeviceDTO device)
+        {
+            try
+            {
+                await _deviceHandler.UpdateDevice(device);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost]
         [Route("UserDeviceAssociation")]
         [EnableCors("MyPolicy")]
         public async Task<ActionResult<DeviceAssociationResult>> AddDeviceToUser([FromBody] UserDeviceAssociation userDevice)
@@ -108,5 +124,38 @@ namespace WiseThingPortal.Api.Controllers
             return responseBody;
         }
 
+        [HttpGet]
+        [Route("GetDeviceStatus/{tagname}")]
+        [EnableCors("MyPolicy")]
+        public async Task<ActionResult<string>> GetDeviceStatus(string tagname)
+        {
+            try
+            {
+                var deviceStatus = await _deviceHandler.GetDeviceStatus(tagname);
+                return Ok(deviceStatus);
+
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Route("AddDeviceStatus")]
+        [EnableCors("MyPolicy")]
+        public async Task<ActionResult<string>> AddDeviceStatus(DeviceAddStatusDTO deviceStatusDto)
+        {
+            try
+            {
+                var deviceStatus = await _deviceHandler.AddDeviceStatus(deviceStatusDto);
+                return Ok(deviceStatus);
+
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

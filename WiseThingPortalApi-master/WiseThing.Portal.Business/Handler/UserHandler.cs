@@ -41,9 +41,9 @@ namespace WiseThing.Portal.Business
             return user;
         }
 
-        public async Task<bool> IsUserNameAlreadyExsist(string userName)
+        public async Task<bool> IsEmailAlreadyExsist(string email)
         {
-            return await _userRepo.IsUserExists(userName);
+            return await _userRepo.IsEmailExists(email);
         }
         public async Task ResetPassword(ResetPasswordDTO resetPassword)
         {

@@ -52,7 +52,7 @@ namespace WiseThingPortalApi
                 options.AddPolicy("MyPolicy",
                     builder =>
                     {
-                        //builder.WithOrigins("http://localhost:4200");
+                        //builder.WithOrigins("http://wisethingportalbucket.s3-website.us-east-2.amazonaws.com").AllowAnyHeader().AllowAnyMethod();
                         builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                                 
                     });

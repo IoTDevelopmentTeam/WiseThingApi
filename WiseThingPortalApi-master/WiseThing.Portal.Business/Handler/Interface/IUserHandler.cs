@@ -10,7 +10,7 @@ namespace WiseThing.Portal.Business
     {
         Task AddEditUser(UserDTO user);
         Task<UserDTO> GetUserByLogin(string email, string passWord);
-        Task<bool> IsUserNameAlreadyExsist(string userName);
+        Task<bool> IsEmailAlreadyExsist(string userName);
         Task<UserDTO> GetUserById(int userId);
         Task ResetPassword(ResetPasswordDTO resetpassword);
     }

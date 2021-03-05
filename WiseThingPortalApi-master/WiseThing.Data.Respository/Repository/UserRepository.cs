@@ -51,7 +51,7 @@ namespace WiseThing.Data.Respository
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email && x.Password== passWord);
             return _mapper.Map<UserDTO>(user);
         }
-        public async Task<bool> IsUserExists(string email)
+        public async Task<bool> IsEmailExists(string email)
         {
             return await _context.Users.AnyAsync(x => x.Email == email);
         }

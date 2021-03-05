@@ -83,15 +83,15 @@ namespace WiseThingPortal.Api.Controllers
         }
 
         [HttpGet]
-        [Route("UserNameExist/{userName}")]
+        [Route("EmailExist/{email}")]
         [EnableCors("MyPolicy")]
-        public async Task<ActionResult<bool>> CheckUserNameAvialable(string userName)
+        public async Task<ActionResult<bool>> CheckEmailAvialable(string email)
         {
             try
             {
-                if (!string.IsNullOrEmpty(userName))
+                if (!string.IsNullOrEmpty(email))
                 {
-                    var response = await _userHandler.IsUserNameAlreadyExsist(userName); ;
+                    var response = await _userHandler.IsEmailAlreadyExsist(email); ;
                     return Ok(response);
                 }
                 else

@@ -11,7 +11,7 @@ namespace WiseThing.Data.Respository
         Task EditUser(UserDTO userDto);
         Task<UserDTO> GetUserById(int userId);
         Task<UserDTO >GetUserByLoginDetails(string email, string passWord);
-        Task<bool> IsUserExists(string userName);
+        Task<bool> IsEmailExists(string userName);
         Task ResetPassword(ResetPasswordDTO resetPasswordDTO);
 
     }

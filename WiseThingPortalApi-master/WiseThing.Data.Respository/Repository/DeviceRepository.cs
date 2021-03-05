@@ -25,6 +25,13 @@ namespace WiseThing.Data.Respository
             await _context.SaveChangesAsync();
             return deviceceDto;
         }
+        public async Task UpdateDevice(DeviceDTO deviceDto)
+        {
+            var device = await _context.Devices.SingleAsync(x => x.DeviceTagName == deviceDto.DeviceTagName);
+            device.IsUsed = deviceDto.IsUsed;
+            await _context.SaveChangesAsync();
+    
+        }
         public async Task EditDevice(UserDeviceDTO dto, string deviceName)
         {
             var dev = await _context.Devices.SingleOrDefaultAsync(x => x.DeviceId == dto.DeviceId);
@@ -66,6 +73,7 @@ namespace WiseThing.Data.Respository
             return result!=null?result.DeviceId:0;
         }
 
+       
         public async Task<int> GetUserIdbyDeviceId(int deviceId)
         {
             var userIdlist = await (from d in _context.Devices
@@ -74,6 +82,24 @@ namespace WiseThing.Data.Respository
                                     where d.DeviceId == deviceId
                                    select ud.UserId).ToListAsync();
             return userIdlist!=null && userIdlist.Count>0 ? userIdlist.First():0;
+        }
+        public async Task AddDeviceStatus(DeviceAddStatusDTO deviceStatusDto)
+        {
+            var deviceStatus = await _context.Devices.SingleAsync(x => x.DeviceTagName == deviceStatusDto.DeviceTagName);
+            DateTime FirstUsed = deviceStatusDto.FirstUse;
+            deviceStatus.FirstUse = FirstUsed;
+            deviceStatus.ExpDate = FirstUsed.AddMonths(6);
+            await _context.SaveChangesAsync();
+           
+        }
+
+        public async Task<DeviceStatusDTO> GetDeviceStatus(string tagName)
+        {
+            string retString = string.Empty;
+            var deviceStausDTO = await _context.Devices.SingleAsync(x => x.DeviceTagName == tagName);
+            var deviceStaus = _mapper.Map<DeviceStatusDTO>(deviceStausDTO);
+            return deviceStaus;
+
         }
     }
 }
