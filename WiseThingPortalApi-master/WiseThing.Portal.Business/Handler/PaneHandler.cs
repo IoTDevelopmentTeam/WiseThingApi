@@ -27,6 +27,18 @@ namespace WiseThing.Portal.Business
             return paneId;
             
         }
+        public async Task UpdatePaneDetails(PaneDetailsDTO paneDetails)
+        {
+
+            await _paneRepo.UpdatePaneDetails(paneDetails);
+            
+
+        }
+
+        public async Task RemovePaneDetails(int id)
+        {
+            await _paneRepo.RemovePaneDetails(id);
+        }
         public async Task<IEnumerable<ConfigDetailsDTO>> GetConfigDetailsById(int Id)
         {
             var pane = await _paneRepo.GetConfigDetailsById(Id);

@@ -9,10 +9,9 @@ namespace WiseThing.Data.Respository
     {
         public int PaneId { get; set; }
         public int DeviceId { get; set; }
-        public float PositionX { get; set; }
-        public float PositionY { get; set; }
-        public float Height { get; set; }
-        public float Width { get; set; }
+        public string DeviceName { get; set; }
+        public int? Index { get; set; }
+        public string? Size { get; set; }
 
         public virtual Device Device { get; set; }
 

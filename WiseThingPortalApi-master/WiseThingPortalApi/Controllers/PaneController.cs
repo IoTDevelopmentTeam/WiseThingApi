@@ -83,8 +83,59 @@ namespace WiseThingPortal.Api.Controllers
             }
 
         }
+        [HttpPost]
+        [Route("UpdatePaneDetails")]
+        [EnableCors("MyPolicy")]
+        public async Task<IActionResult> UpdatePaneDetails([FromBody] PaneDetailsDTO paneDetails)
+        {
+            try
+            {
 
+                if (paneDetails != null)
+                {
+                   await _paneHandler.UpdatePaneDetails(paneDetails);
+                    return Ok();
+                }
+                else
+                {
 
+                    return BadRequest();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
+        [HttpPost]
+        [Route("RemovePaneDetails")]
+        [EnableCors("MyPolicy")]
+        public async Task<IActionResult> RemovePaneDetails([FromBody] PaneDetailsDTO paneDetails)
+        {
+            try
+            {
+
+                if (paneDetails.PaneId > 0)
+                {
+                    await _paneHandler.RemovePaneDetails(paneDetails.PaneId);
+                    return Ok();
+                }
+                else
+                {
+
+                    return BadRequest();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+
+        }
         [HttpGet]
         [Route("GetConfigDetails/{id}")]
         [EnableCors("MyPolicy")]

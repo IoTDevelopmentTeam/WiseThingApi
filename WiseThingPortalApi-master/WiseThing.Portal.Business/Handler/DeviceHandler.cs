@@ -176,5 +176,11 @@ namespace WiseThing.Portal.Business
             }
             return GetDeviveStatusResult(deviceId,null,false,false, "POST");
         }
+
+        public async Task<string> GetDeviceTagname(int id)
+        {
+
+            return await _devicerepo.GetDeviceTagName(id);
+        }
     }
 }

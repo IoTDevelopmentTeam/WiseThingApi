@@ -8,6 +8,10 @@ namespace WiseThing.Data.Respository
     public interface IPaneRepository
     {
         Task<int> AddNewPaneDetails(PaneDetailsDTO paneDetailsDto);
+
+        Task UpdatePaneDetails(PaneDetailsDTO paneDetailsDto);
+
+        Task RemovePaneDetails(int id);
         Task<IEnumerable<PaneDetailsDTO>> GetPaneDetailsById(int Id);
 
         Task AddNewConfigDetails(ConfigDetailsDTO[] configDetailsDto);

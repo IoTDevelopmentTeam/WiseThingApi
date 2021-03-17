@@ -114,15 +114,25 @@ namespace WiseThingPortal.Api.Controllers
         }
 
         [HttpGet]
-        [Route("DeviceData")]
+        [Route("DeviceData/{id}")]
         [EnableCors("MyPolicy")]
-        public async Task<DashboardModel[]> GetAsync()
+        public async Task<ActionResult<DashboardModel1[]>> GetAsync(int id)
         {
+            try { 
+            string tagName = string.Empty;
+            tagName = await _deviceHandler.GetDeviceTagname(id);
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("https://api.wisethingz.com/Dev/thingsapi?thingname=parv&count=20");
-            DashboardModel[] responseBody = JsonConvert.DeserializeObject< DashboardModel[] >(await response.Content.ReadAsStringAsync());
+                      
+            HttpResponseMessage response = await client.GetAsync("https://api.wisethingz.com/Dev/thingsapi?thingname="+tagName+"&count=20");
+            DashboardModel1[] responseBody = JsonConvert.DeserializeObject<DashboardModel1[]>(await response.Content.ReadAsStringAsync());
+           
             return responseBody;
-        }
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+}
 
         [HttpGet]
         [Route("GetDeviceStatus/{tagname}")]

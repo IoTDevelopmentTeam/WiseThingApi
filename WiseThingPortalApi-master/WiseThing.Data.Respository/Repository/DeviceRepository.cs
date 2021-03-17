@@ -101,5 +101,16 @@ namespace WiseThing.Data.Respository
             return deviceStaus;
 
         }
+
+        public async Task<string> GetDeviceTagName(int id)
+        {
+            string retString = string.Empty;
+            var deviceDTO = await _context.Devices.SingleAsync(x => x.DeviceId == id);
+            var device = _mapper.Map<DeviceStatusDTO>(deviceDTO);
+            retString = device.DeviceTagName;
+            return retString;
+
+        }
+
     }
 }

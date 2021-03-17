@@ -17,5 +17,7 @@ namespace WiseThing.Portal.Business
         Task<DeviceStatusResult> GetDeviceStatus(string tagName);
         Task<DeviceStatusResult> AddDeviceStatus(DeviceAddStatusDTO device);
 
+        Task<string> GetDeviceTagname(int id);
+
     }
 }
