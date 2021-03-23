@@ -14,8 +14,8 @@ namespace WiseThing.Portal.Business
         Task<IEnumerable<DeviceDTO>> GetDevicesforUser(int userId);
         Task<IEnumerable<DeviceDTO>> GetAdminDevices();
 
-        Task<DeviceStatusResult> GetDeviceStatus(string tagName);
-        Task<DeviceStatusResult> AddDeviceStatus(DeviceAddStatusDTO device);
+        Task<DeviceStatusDTO> GetDeviceStatus(string tagName);
+        Task AddDeviceStatus(DeviceAddStatusDTO device);
 
         Task<string> GetDeviceTagname(int id);
 

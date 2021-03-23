@@ -14,10 +14,7 @@ namespace WiseThing.Portal.Business
         private const string deviceTagAlreadyAssociated = "Device tag already associated with the user";
         private const string deviceTagAssociatedOtherUser = "Entered device tag is associated with other user ";
         private const string sucessMessage = "Device added successfully";
-        private const string deviceStatusAlreadyExist = "Entered device tag is already in use ";
-        private const string sucessMessageDeviceStatus = "Device is in use. Ready to update First Used date ";
-        private const string sucessMessageDeviceAddStatus = "Device data updated successfully ";
-        private const string notUsedDeviceStatus = "Device not in used ";
+       
         public DeviceHandler(IUserDeviceRepository userDeviceRepo, IDeviceRepository deviceRepo)
         {
              _devicerepo = deviceRepo;
@@ -103,79 +100,29 @@ namespace WiseThing.Portal.Business
                 };
 
         }
-        private DeviceStatusResult GetDeviveStatusResult(int deviceId,DateTime? firstUsed,bool? isUsed,bool isSuccess,string methodType)
+
+        public async Task<DeviceStatusDTO> GetDeviceStatus(string tagName)
         {
-            if (isSuccess)
-                return new DeviceStatusResult()
-                {
-                    IsDeviceStatusSucceded = true,
-                    Message = (methodType=="GET")?sucessMessageDeviceStatus:sucessMessageDeviceAddStatus
-                };
-            
-            if (deviceId == 0)
-                return new DeviceStatusResult()
-                {
-                    IsDeviceStatusSucceded = false,
-                    Message = invalidDeviceTag
-                };
-            if(firstUsed!=null)
-                return new DeviceStatusResult()
-                {
-                    IsDeviceStatusSucceded = false,
-                    Message = deviceStatusAlreadyExist
-                };
-            if(isUsed != true)
-                return new DeviceStatusResult()
-                {
-                    IsDeviceStatusSucceded = false,
-                    Message = notUsedDeviceStatus
-                };
 
-            return new DeviceStatusResult()
-            {
-                IsDeviceStatusSucceded = false,
-                Message = "Unknown"
-            };
+
+            return await _devicerepo.GetDeviceStatus(tagName);
+
+
         }
-
-        public async Task<DeviceStatusResult> GetDeviceStatus(string tagName) 
+        public async Task AddDeviceStatus(DeviceAddStatusDTO device)
         {
-            
-            var deviceId = await _devicerepo.IsDeviceTagExist(tagName);
-            if (deviceId > 0)
-            {
-               var deviceStatus= await _devicerepo.GetDeviceStatus(tagName);
-                bool isSuccess = false;
-                if (deviceStatus.IsUsed == true && deviceStatus.FirstUse == null)
-                    isSuccess = true;
-                return GetDeviveStatusResult(deviceId, deviceStatus.FirstUse, deviceStatus.IsUsed, isSuccess,"GET");
-            }
-            else
-            {
-                return GetDeviveStatusResult(deviceId, null, false, false, "GET");
-            }
 
-            
-        }
-        public async Task<DeviceStatusResult> AddDeviceStatus(DeviceAddStatusDTO device) {
-            
-            
+
             var deviceId = await _devicerepo.IsDeviceTagExist(device.DeviceTagName);
             if (deviceId > 0)
             {
-                var deviceStatus = await _devicerepo.GetDeviceStatus(device.DeviceTagName);
-                bool isSuccess = false;
-                if (deviceStatus.IsUsed == true && deviceStatus.FirstUse == null)
-                {
-                    isSuccess = true;
-                    await _devicerepo.AddDeviceStatus(device);
-                }
 
-                return GetDeviveStatusResult(deviceId, deviceStatus.FirstUse, deviceStatus.IsUsed, isSuccess, "POST");
+                await _devicerepo.AddDeviceStatus(device);
 
             }
-            return GetDeviveStatusResult(deviceId,null,false,false, "POST");
+
         }
+
 
         public async Task<string> GetDeviceTagname(int id)
         {

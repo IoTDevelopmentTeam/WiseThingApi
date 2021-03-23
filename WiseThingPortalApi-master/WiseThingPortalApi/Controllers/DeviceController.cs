@@ -137,12 +137,15 @@ namespace WiseThingPortal.Api.Controllers
         [HttpGet]
         [Route("GetDeviceStatus/{tagname}")]
         [EnableCors("MyPolicy")]
-        public async Task<ActionResult<string>> GetDeviceStatus(string tagname)
+        public async Task<ActionResult<DeviceStatusDTO>> GetDeviceStatus(string tagname)
         {
             try
             {
                 var deviceStatus = await _deviceHandler.GetDeviceStatus(tagname);
-                return Ok(deviceStatus);
+                if (deviceStatus != null)
+                    return Ok(deviceStatus);
+                else
+                    return NotFound();
 
             }
             catch (Exception ex)
@@ -154,12 +157,12 @@ namespace WiseThingPortal.Api.Controllers
         [HttpPost]
         [Route("AddDeviceStatus")]
         [EnableCors("MyPolicy")]
-        public async Task<ActionResult<string>> AddDeviceStatus(DeviceAddStatusDTO deviceStatusDto)
+        public async Task<ActionResult> AddDeviceStatus(DeviceAddStatusDTO deviceStatusDto)
         {
             try
             {
-                var deviceStatus = await _deviceHandler.AddDeviceStatus(deviceStatusDto);
-                return Ok(deviceStatus);
+                await _deviceHandler.AddDeviceStatus(deviceStatusDto);
+                return Ok();
 
             }
             catch (Exception ex)
@@ -167,5 +170,6 @@ namespace WiseThingPortal.Api.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+
     }
 }
