@@ -19,5 +19,7 @@ namespace WiseThing.Portal.Business
 
         Task<string> GetDeviceTagname(int id);
 
+        Task EditDeviceLabelName(DeviceDTO device);
+
     }
 }

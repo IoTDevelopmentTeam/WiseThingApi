@@ -129,5 +129,12 @@ namespace WiseThing.Portal.Business
 
             return await _devicerepo.GetDeviceTagName(id);
         }
+
+        public async Task EditDeviceLabelName(DeviceDTO device)
+        {
+            await _devicerepo.EditDeviceLabelName(device);
+
+        }
+        
     }
 }

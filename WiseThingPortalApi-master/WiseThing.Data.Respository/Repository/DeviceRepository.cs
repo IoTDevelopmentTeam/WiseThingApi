@@ -112,6 +112,13 @@ namespace WiseThing.Data.Respository
             return retString;
 
         }
+        public async Task EditDeviceLabelName(DeviceDTO deviceDto)
+        {
+            var device = await _context.Devices.SingleAsync(x => x.DeviceTagName == deviceDto.DeviceTagName);
+            device.DeviceName = deviceDto.DeviceName;
+            await _context.SaveChangesAsync();
+
+        }
 
     }
 }

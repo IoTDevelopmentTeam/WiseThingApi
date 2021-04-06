@@ -20,5 +20,7 @@ namespace WiseThing.Data.Respository
         Task<DeviceStatusDTO> GetDeviceStatus(string tagName);
 
         Task<string> GetDeviceTagName(int id);
+
+        Task EditDeviceLabelName(DeviceDTO deviceDto);
     }
 }

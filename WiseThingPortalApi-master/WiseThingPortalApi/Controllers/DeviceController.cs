@@ -171,5 +171,22 @@ namespace WiseThingPortal.Api.Controllers
             }
         }
 
+
+        [HttpPost]
+        [Route("EditDeviceLabelName")]
+        [EnableCors("MyPolicy")]
+        public async Task<ActionResult> EditDeviceLabelName(DeviceDTO device)
+        {
+            try
+            {
+                await _deviceHandler.EditDeviceLabelName(device);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }
