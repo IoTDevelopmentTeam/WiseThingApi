@@ -116,6 +116,13 @@ namespace WiseThing.Data.Respository
         {
             var device = await _context.Devices.SingleAsync(x => x.DeviceTagName == deviceDto.DeviceTagName);
             device.DeviceName = deviceDto.DeviceName;
+
+            var pane = await _context.PaneDetails.Where(x => x.DeviceId == device.DeviceId).ToListAsync();
+            pane.ForEach(x =>
+            {
+                x.DeviceName= deviceDto.DeviceName;
+            });
+
             await _context.SaveChangesAsync();
 
         }
